@@ -2,6 +2,7 @@ pipeline {
     agent {
         docker {
             image 'mcr.microsoft.com/playwright:v1.44.0-jammy'
+            args '--ipc=host'
         }
     }
 
@@ -11,6 +12,7 @@ pipeline {
                 git 'https://github.com/monikamohanty07/Playwright_Demo.git'
             }
         }
+
         stage('Install') {
             steps {
                 sh 'npm ci'
@@ -23,10 +25,23 @@ pipeline {
                 sh 'npx playwright test'
             }
         }
-        stage('Report'){
+
+        stage('Report') {
             steps {
                 archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline completed'
+        }
+        success {
+            echo 'Tests passed ✅'
+        }
+        failure {
+            echo 'Tests failed ❌'
         }
     }
 }
