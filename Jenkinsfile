@@ -7,11 +7,11 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/monikamohanty07/Playwright_Demo.git'
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         git branch: 'main', url: 'https://github.com/monikamohanty07/Playwright_Demo.git'
+        //     }
+        // }
 
         stage('Install') {
             steps {
